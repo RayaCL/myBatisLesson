@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- 数据库的列名和实体类的属性名不一致时
+  		需要建立类名和属性名的映射关系
+  		结果集映射返回的结果是相同的都是grade 只是多了一层关系
+   -->
+  
+<mapper namespace="cn.et.lesson03.returnMap.xml.StudentMapper">
+	
+	<!-- 映射多对1关系 -->
+	<resultMap type="student" id="studentMap" autoMapping="true">
+		 <id column="sid" property="sid"/>
+		 <!-- select * from student where gid=${学生信息中gid} -->
+		 <association property="grade" column="gid" fetchType="lazy" select="cn.et.lesson03.returnMap.xml.GradeMapper.queryGradeByGid"></association>
+	</resultMap>
+	
+  	<select id="queryStudent" resultMap="studentMap">
+  	select * from student where sid=#{0}
+  	</select>
+  	<select id="queryStudentByGid" resultType="student">
+  	select * from student where gid=#{0}
+  	</select>
+</mapper>

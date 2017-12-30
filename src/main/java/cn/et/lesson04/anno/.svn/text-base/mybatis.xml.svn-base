@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+<!--  是mybaitis的核心配置文件
+		1.数据库的链接信息(连接池)
+ -->
+<properties resource="jdbcoracle.properties">
+	
+</properties>
+<typeAliases>
+	<typeAlias type="cn.et.lesson04.anno.Student" alias="student"/>
+</typeAliases>
+  <environments default="development">
+    <environment id="development">
+    <!-- 事务管理器默契使用jdbc事务 -->
+      <transactionManager type="JDBC"/>
+      <dataSource type="POOLED">
+        <property name="driver" value="${driverClass}"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${userName}"/>
+        <property name="password" value="${password}"/>
+      </dataSource>
+    </environment>
+  </environments>
+  <mappers>
+  
+  	<mapper class="cn.et.lesson04.anno.StudentMapper"/>
+  </mappers>
+</configuration>

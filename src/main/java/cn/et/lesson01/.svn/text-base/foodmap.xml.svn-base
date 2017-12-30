@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- 命名空间 用于区分多个文件中的相同id 
+  	比如a.xml (namespace=a)
+  	id="test"
+  	b.xml (namespace=b)
+  	id="test"
+  	
+  	a.test
+  	b.test
+  -->
+<mapper namespace="a">
+  	<select id="selectFood" resultType="java.util.Map">
+  	select * from food
+  	</select>
+  	<select id="selectFoodById" resultType="java.util.Map" >
+  	select * from food where foodid=1
+  	</select>
+  	<insert id="insertFood" ><!--
+  	insert into food  values ((select (max(foodid)+1) from food),'回锅肉','68')
+  	insert into food  values ((select (max(foodid)+1) from food),#{foodname},#{price})
+  	-->
+  	insert into food  values (#{foodid},#{foodname},#{price})
+  	</insert>
+  	<insert id="saveFood" >
+  	insert into food  values ((select (max(foodid)+1) from food),#{foodname},#{price})
+  	</insert>
+  	
+  	<!-- 查询的条件 
+  	使用#{键}方式实际上 是使用占位符?来替代
+  	使用${键}方式实际上 是使用值 直接替换对应的键
+  	-->
+  	<select id="selectFoodParam" resultType="java.util.Map">
+  	select * from food where foodname='${foodname}' and price=${price}
+  	</select>
+  	<update id="updateFood" ><!--
+  	update food set foodname='大盘鸡' where foodid=1
+  	-->
+  	update food set foodname=#{foodname} where foodid=#{foodid}
+  	</update>
+  	<delete id="deleteFood">
+  	delete food where foodid=#{foodid}
+  	</delete>
+</mapper>
